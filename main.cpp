@@ -28,36 +28,6 @@ double sub_distance(string,string);
 int isint(string);
 
 
-void test(){
-	string test_string1 = "poop";
-	string test_string2 = "gayeeee!!!";
-	string ignore;
-	ifstream fin;
-	fin.open("anneal.arf");
-
-	//TESTING LOOP FOR sub_distance(string,string);
-//	while (test_string1 != "q"){
-//		cout << "\nPlease enter strings for distance test\n";
-//		cin >> test_string1 >> test_string2;
-//		cout << endl <<sub_distance(test_string1, test_string2) << endl;
-//	}
-	//End Loop
-
-//TESTING LOOP for isint(string)
-//		while (test_string1 != "q"){
-//			cout << "\nPlease enter strings for isint() test\n";
-//			cin >> test_string1;
-//			cout << endl << isint(test_string1) << endl;
-//		}
-
-
-
-
-	fin.close();
-	return;
-}
-
-
 int main()
 {
 	ifstream fin;
@@ -68,6 +38,7 @@ int main()
 	string input;
 
 	int rows = 0;
+	int num_attrubutes = 0;
 	int test_size;
 	int training_size;
 
@@ -78,12 +49,12 @@ int main()
 	while(j == -1){
 		getline(fin, temp_instance, '\n');
 		j = temp_instance.find("@data");
+		num_attrubutes++;
 	}
 
 //Populate array (data has already been randomized
 	while (!fin.eof()){
 		getline(fin, instances[rows], '\n');
-//		fin >> ignore;
 		cout << "instances[" << rows << "] = " << instances[rows] << endl;
 		rows++;
 	}
@@ -91,7 +62,6 @@ int main()
 	test_size = rows/10;
 	training_size = rows - test_size;
 
-//test();
 
 	fin.close();
 
@@ -121,6 +91,12 @@ double find_distance(string instance, string compare)
 
 //			cout << "dist value:" << dist << " instance_sub: " << instance_sub <<" compare_sub: " << compare_sub <<  endl;
 
+
+
+
+
+
+//fcomdfsdkksdfksdf
 			prev_pos1 = pos1;
 			prev_pos2 = pos2;
 
