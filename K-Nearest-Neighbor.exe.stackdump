@@ -1,0 +1,9 @@
+Exception: STATUS_STACK_OVERFLOW at eip=00410033
+eax=005AA4BC ebx=00000000 ecx=00092BFC edx=00000001 esi=20028620 edi=6119FE9F
+ebp=0028AC08 esp=0028ABF4 program=C:\Users\Alex\workspace\K-Nearest-Neighbor\Debug\K-Nearest-Neighbor.exe, pid 4952, thread main
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
+0028AC08  00410033  (00000001, 0028AC30, 20028508, 2006205A)
+0028ACF8  61007128  (00000000, 0028CD78, 61006720, 00000000)
+End of stack trace
