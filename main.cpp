@@ -18,17 +18,16 @@
 
 #include<iostream>
 #include<fstream>
+#include<string>
 
 using namespace std;
 
 double find_distance(string,string);
-double distance(string,string);
+double sub_distance(string,string);
 int isint(string);
 
 int main()
 {
-
-
 	ifstream fin;
 	ofstream fout;
 
@@ -36,27 +35,21 @@ int main()
 	string instances[10000];
 	string input;
 
-	double distance = 0;
+	double dist = 0;
 	int i = 0;
 
 
 	fin.open("test.txt");
 
+//this is where we will input training data
 	fin >> temp_instance;
-
-	while(input != "q"){
-		cout << "\ntesting toint() please enter an int or decimal\n";
-		cin >> input;
-		cout << "\n result: " << isint(input) << endl;
-	}
-
 
 	while(!fin.eof()){
 
 		fin >> instances[i];
 		cout << "original string:\n" << instances[i] << endl;
 
-		distance = find_distance(instances[i], temp_instance);
+		dist = find_distance(instances[i], temp_instance);
 	}
 
 	fin.close();
@@ -70,7 +63,7 @@ double find_distance(string instance, string compare)
 	string instance_sub, compare_sub;
 	int pos1 = 0, pos2 = 0;
 	int prev_pos1 = 0, prev_pos2 =0;
-	double dist = 0;
+	double dist = 0.0;
 
 	cout << "attempting to remove all commas: \n";
 
@@ -85,7 +78,9 @@ double find_distance(string instance, string compare)
 			instance_sub = instance.substr(prev_pos1 + 1, pos1 - (prev_pos1 + 1));
 			compare_sub = compare.substr(prev_pos2 + 1, pos2 - (prev_pos2 + 1));
 
-			dist += distance(instance_sub, compare_sub);
+			string test1 = "hi";
+			string test2 = "bye";
+			dist += sub_distance(test1, test2);
 
 			prev_pos1 = pos1;
 			prev_pos2 = pos2;
@@ -96,12 +91,12 @@ double find_distance(string instance, string compare)
 }
 
 
-double distance(string instance_sub, string compare_sub)
+double sub_distance(string in, string comp)
 {
-	double sub_distance = 0;
-
+	double sub_distance = 0.0;
+/*
 //For nominal data
-	if(isalpha(instance_sub[0]) && isalpha(compare_sub[0])){
+	if( isalpha(instance_sub[0]) && isalpha(compare_sub[0]) ){
 
 		//if they are not equal they are 1 apart
 		if(instance_sub != compare_sub)
@@ -115,8 +110,9 @@ double distance(string instance_sub, string compare_sub)
 //For ordinal data
 //	if(isnum(instance_sub[0]) )
 
-
+*/
 	return sub_distance;
+
 }
 
 //tested and it WORKS
