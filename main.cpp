@@ -31,13 +31,16 @@ int isint(string);
 void test(){
 	string test_string1 = "poop";
 	string test_string2 = "gayeeee!!!";
+	string ignore;
+	ifstream fin;
+	fin.open("anneal.arf");
 
 	//TESTING LOOP FOR sub_distance(string,string);
-	while (test_string1 != "q"){
-		cout << "\nPlease enter strings for distance test\n";
-		cin >> test_string1 >> test_string2;
-		cout << endl <<sub_distance(test_string1, test_string2) << endl;
-	}
+//	while (test_string1 != "q"){
+//		cout << "\nPlease enter strings for distance test\n";
+//		cin >> test_string1 >> test_string2;
+//		cout << endl <<sub_distance(test_string1, test_string2) << endl;
+//	}
 	//End Loop
 
 //TESTING LOOP for isint(string)
@@ -46,6 +49,11 @@ void test(){
 //			cin >> test_string1;
 //			cout << endl << isint(test_string1) << endl;
 //		}
+
+
+
+
+	fin.close();
 	return;
 }
 
@@ -55,28 +63,35 @@ int main()
 	ifstream fin;
 	ofstream fout;
 
-	string temp_instance;
+	string temp_instance = "initialize";
 	string instances[10000];
 	string input;
 
-	double dist = 0;
-	int i = 0;
+	int rows = 0;
+	int test_size;
+	int training_size;
 
 
-	fin.open("test.txt");
+	fin.open("credit-g.arff");
 
-//this is where we will input training data
-	fin >> temp_instance;
-
-test();
-
-	while(!fin.eof()){
-
-		fin >> instances[i];
-		cout << "original string:\n" << instances[i] << endl;
-
-		dist = find_distance(instances[i], temp_instance);
+	int j = -1;
+	while(j == -1){
+		getline(fin, temp_instance, '\n');
+		j = temp_instance.find("@data");
 	}
+
+//Populate array (data has already been randomized
+	while (!fin.eof()){
+		getline(fin, instances[rows], '\n');
+//		fin >> ignore;
+		cout << "instances[" << rows << "] = " << instances[rows] << endl;
+		rows++;
+	}
+
+	test_size = rows/10;
+	training_size = rows - test_size;
+
+//test();
 
 	fin.close();
 
@@ -91,8 +106,6 @@ double find_distance(string instance, string compare)
 	int prev_pos1 = 0, prev_pos2 = 0;
 	double dist = 0.0;
 
-	cout << "attempting to remove all commas: \n";
-
 	while ( pos1 != -1 && pos2 != -1){
 
 			pos1 = -1;
@@ -104,7 +117,9 @@ double find_distance(string instance, string compare)
 			instance_sub = instance.substr(prev_pos1 + 1, pos1 - (prev_pos1 + 1));
 			compare_sub = compare.substr(prev_pos2 + 1, pos2 - (prev_pos2 + 1));
 
-			//dist += sub_distance(instance_sub, compare_sub);
+			dist += sub_distance(instance_sub, compare_sub);
+
+//			cout << "dist value:" << dist << " instance_sub: " << instance_sub <<" compare_sub: " << compare_sub <<  endl;
 
 			prev_pos1 = pos1;
 			prev_pos2 = pos2;
@@ -117,44 +132,34 @@ double find_distance(string instance, string compare)
 
 double sub_distance(string instance_sub, string compare_sub)
 {
-	double sub_distance = 0.0;
+
+	double num1 = 0.0;
+	double num2 = 0.0;
+	double result = 0.0;
 
 //For nominal data
-	if( isalpha(instance_sub[0]) && isalpha(compare_sub[0]) ){
+	if( !isdigit(instance_sub[0]) && !isdigit(compare_sub[0]) ){
 
 		//if they are not equal they are 1 apart
-		if(instance_sub != compare_sub)
+		if(instance_sub != compare_sub){
+//			cout << "\n Instance_sub: " << instance_sub << "compare_sub: " << compare_sub << endl;
 			return 1;
-		else
+		}else{
 			return 0;
-	}else if(isint(instance_sub) && isint(compare_sub)){
-
-		return abs( atoi(instance_sub.c_str()) - atoi(compare_sub.c_str()) );
-
-	}else if (!isint(instance_sub) && !isint(compare_sub)){
-
-		double result = abs( (strtod(instance_sub.c_str(), NULL) - strtod(compare_sub.c_str(), NULL) ) );
-		cout << endl << "comparing doubles" << strtod(instance_sub.c_str(), NULL) << " and " <<strtod(compare_sub.c_str(), NULL) << endl;
-		cout << "result: " << result << endl;
-		return result;
-
+		}
 	}
 
-//For ordinal data
-
-
-	return sub_distance;
-
+	if(isdigit(instance_sub[0]) && isdigit(compare_sub[0])){
+		num1 = strtod(instance_sub.c_str(), NULL);
+		num2 = strtod(compare_sub.c_str(), NULL);
+		result = abs( (num1 - num2 ) );
+		if (result > 1)
+			result = 1;
+//		cout << endl << "comparing doubles: " << num1 << " and " <<num2 << endl;
+//		cout << "result: " << result << endl;
+		return result;
+	}
 }
-
-//tested and it WORKS
-int isint(string test){
-
-	if(test.find('.') == -1)
-		return 1;
-	else return 0;
-}
-
 
 
 
