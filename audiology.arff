@@ -1,4 +1,4 @@
-@relation audiology-weka.filters.unsupervised.instance.Randomize-S42
+@relation audiology-weka.filters.unsupervised.instance.Normalize-N1.0-L2.0-weka.filters.unsupervised.instance.Randomize-S42
 
 @attribute age_gt_60 {f,t}
 @attribute air {mild,moderate,normal,profound,severe}
